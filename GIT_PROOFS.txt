@@ -1,0 +1,8 @@
+=== git log --oneline --decorate -n 10 ===
+[COLLER ICI]
+
+=== git show --name-only --pretty=format:"%h %an %ad %s" HEAD ===
+[COLLER ICI]
+
+=== git status ===
+[COLLER ICI]
