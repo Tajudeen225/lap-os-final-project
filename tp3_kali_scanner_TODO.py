@@ -18,7 +18,26 @@ complétés, certaines fonctions ne font rien d'utile. Regardez les messages
 affichés à l'écran — ils vous indiqueront quel TODO est à faire.
 """
 
+
 import subprocess, os, datetime, shutil, sys
+import time
+import threading
+
+def loading_animation(stop_event):
+    chars = "|/-\\"
+    i = 0
+    while not stop_event.is_set():
+        sys.stdout.write("\r🔍 Scan en cours " + chars[i % len(chars)])
+        sys.stdout.flush()
+        i += 1
+        time.sleep(0.1)
+    sys.stdout.write("\r✔ Scan terminé !        \n")
+
+def banner():
+    print("\n" + "="*50)
+    print("        MINI SCANNER PRO ")
+    print("         - NMAP TOOL -")
+    print("="*50)
 
 REPORTS_DIR = "reports"
 
@@ -36,34 +55,45 @@ def save_report(content, prefix="scan"):
     return path
 
 def run_nmap(args, target):
+    stop_event = threading.Event()
+    thread = threading.Thread(target=loading_animation, args=(stop_event,))
+    thread.start()
+
     cmd = ["nmap"] + args + [target]
+
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, check=True)
         output = p.stdout
         if p.stderr:
             output += f"\n[stderr]\n{p.stderr}"
-        return output
     except subprocess.CalledProcessError as e:
-        return f"[ERREUR] nmap code {e.returncode}\n{e.stderr or ''}"
+        output = f"[ERREUR] nmap code {e.returncode}\n{e.stderr or ''}"
     except FileNotFoundError:
-        return "[ERREUR] nmap introuvable dans le PATH."
+        output = "[ERREUR] nmap introuvable dans le PATH."
+
+    stop_event.set()
+    thread.join()
+
+    return output
 
 # --- TODOs à compléter ---
 
 def timestamp():
     # TODO-1: retourner un horodatage AAAAMMJJ_HHMMSS (ex: 20251112_213000)
     # Indice : datetime.datetime.now().strftime(...)
-    pass
+    return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    
 
 def check_nmap():
     # TODO-2: retourner True si nmap est dans le PATH, sinon False
     # Indice : shutil.which("nmap")
-    pass
+    return shutil.which("nmap") is not None
 
 def allowed_target(t):
     # TODO-3: autoriser STRICTEMENT '127.0.0.1', 'localhost' ou '::1'
     # Indice : comparer t à un ensemble de valeurs autorisées
-    pass
+    allowed = {"127.0.0.1", "localhost", "::1"}
+    return t in allowed
 
 # --- menu déjà fait ---
 def menu():
@@ -75,6 +105,7 @@ def menu():
     return input("Choix (1-4) : ").strip()
 
 def main():
+    banner()
     # check_nmap() peut retourner None tant que TODO-2 n'est pas fait.
     # On affiche un avertissement mais on continue, pour laisser l'élève
     # explorer le menu et comprendre la structure du programme.
@@ -106,11 +137,15 @@ def main():
 
         if c == "1":
             out = run_nmap(["--top-ports", "100"], target)
+            print(out)
+            
             path = save_report(out, "top100")
             print("Rapport créé :", path)
+        
 
         elif c == "2":
             out = run_nmap(["-sV"], target)
+            print(out)
             path = save_report(out, "sv")
             print("Rapport créé :", path)
 
@@ -119,11 +154,16 @@ def main():
             if not line:
                 print("Options vides — annulé.")
                 continue
+            print("\n Lancement du scan...\n")
             # TODO-4: découper 'line' en liste d'options avec .split(),
             #         lancer run_nmap(options, target) et sauvegarder
             #         le rapport avec save_report(out, "custom").
             #         Affichez ensuite le chemin du rapport créé.
-            print("[AVERTISSEMENT] TODO-4 non implémenté (scan personnalisé).")
+            options = line.split()
+            out = run_nmap(options, target)
+            print(out)
+            path = save_report(out, "custom")
+            print("Rapport créé :", path)
 
         else:
             print("Choix invalide.")
