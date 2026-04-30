@@ -1,8 +1,20 @@
 === git log --oneline --decorate -n 10 ===
-[COLLER ICI]
+853614c (HEAD -> main, origin/main, origin/HEAD) feat: ajout mini scanner TP3 avec scans nmap et rapports
+f0091fe feat: ajout mini scanner et  rapports nmap
+706468f feat: Copie du dossier du projet a completer
+9068a3f Initial commit
 
 === git show --name-only --pretty=format:"%h %an %ad %s" HEAD ===
-[COLLER ICI]
+853614c Tajudeen225 Thu Apr 30 17:39:12 2026 -0400 feat: ajout mini scanner TP3 avec scans nmap et rapports
+GIT_PROOFS.txt
 
 === git status ===
-[COLLER ICI]
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   GIT_PROOFS.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
