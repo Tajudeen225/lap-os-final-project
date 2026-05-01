@@ -1,7 +1,8 @@
-# TP3 – Mini Scanner (version TODO)
+# TP3 – Mini Scanner 
 
-## Objectif
-Compléter le script "tp3_kali_scanner_TODO.py" pour lancer des scans nmap **sur 127.0.0.1 uniquement** et sauvegarder chaque rapport dans "./reports/".
+## Description
+Ce projet est un mini scanner réseau développé en Python utilisant Nmap.
+Il permet d’effectuer des scans uniquement sur des cibles locales autorisées (127.0.0.1, localhost, ::1) et de sauvegarder automatiquement les résultats dans des fichiers horodatés.
 
 ## À faire (TODO)
 1. Autoriser seulement "127.0.0.1" / "localhost" / "::1".
@@ -10,6 +11,15 @@ Compléter le script "tp3_kali_scanner_TODO.py" pour lancer des scans nmap **sur
 4. Gérer proprement les erreurs d’exécution (code retour, stderr).
 5. Sauvegarder les rapports avec un nom horodaté.
 6. Implémenter le "scan personnalisé" (parser les options utilisateur).
+
+##  Fonctionnalités
+- Interface menu simple (CLI)
+- Scan rapide des 100 premiers ports
+- Détection des services ouverts (-sV)
+- Scan personnalisé avec options nmap
+- Vérification de la présence de nmap
+- Validation des cibles autorisées (sécurité)
+- Sauvegarde automatique des résultats dans le dossier "reports/"
 
 ## Exécution
 python3 tp3_kali_scanner_TODO.py
