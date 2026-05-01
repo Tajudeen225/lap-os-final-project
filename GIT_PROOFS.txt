@@ -1,3 +1,4 @@
+
 === git log --oneline --decorate -n 10 ===
 853614c (HEAD -> main, origin/main, origin/HEAD) feat: ajout mini scanner TP3 avec scans nmap et rapports
 f0091fe feat: ajout mini scanner et  rapports nmap
@@ -18,3 +19,9 @@ Changes not staged for commit:
 	modified:   GIT_PROOFS.txt
 
 no changes added to commit (use "git add" and/or "git commit -a")
+=======
+853614c feat: ajout mini scanner TP3 avec scans nmap et rapports
+f0091fe feat: ajout mini scanner et  rapports nmap
+706468f feat: Copie du dossier du projet a completer
+9068a3f Initial commit
+>>>>>>> a575372 (update GIT_PROOFS and cleanup project structure)
